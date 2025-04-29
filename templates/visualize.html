@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visualize Color Blindness</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f7fb;
+      color: #333;
+    }
+
+    header {
+      background: #0077cc;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 1rem;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 30px auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    label, select, input[type="file"], button {
+      font-size: 16px;
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    .image-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .image-item {
+      background: white;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+
+    .image-item img {
+      margin-top: 1rem;
+      border: 3px solid #ccc;
+      border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+      transition: transform 0.3s;
+    }
+
+    .image-item img:hover {
+      transform: scale(1.05);
+    }
+
+    .image-item p {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>VisionSimLab</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/learn">Learn</a>
+      <a href="/quiz">Quiz</a>
+      <a href="/visualize">Visualize</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Upload an image and choose vision types to simulate:</h2>
+
+    <form action="/visualize" method="POST" enctype="multipart/form-data">
+      <input type="file" name="image" required>
+
+      <button type="submit">Generate Simulation</button>
+    </form>
+
+    {{if .Images}}
+      <h3 style="text-align: center;">Results:</h3>
+      <div class="image-grid">
+        {{range .Images}}
+          <div class="image-item">
+            <img src="/output/{{.}}" alt="{{.}}">
+            <p><a href="/output/{{.}}" download="{{.}}">Download {{.}}</a></p>
+          </div>
+        {{end}}
+      </div>
+    {{end}}
+  </main>
+</body>
+</html>
